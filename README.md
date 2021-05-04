@@ -3,6 +3,7 @@ SurveysAPI is a JSON REST API for creating, modifying, and submitting surveys. A
 - Text Entry (free form) (ex: "What is your name")
 - Multiple Choice (ex: "Which color do you like the best? Choose one: [Orange, Green, Blue, Red]")
 - Date (ex: "What is your birthdate?")
+  - NOT timestamp; this is date-only
 
 # Challenge Overview
 This challenge has two parts (instructions for each appear below):
@@ -37,8 +38,8 @@ These are just use cases, not necessarily API endpoints. Your API can have as ma
 ## Tech Specs
 - Must be runnable on a Node version >v10
 - Must be pure nodejs (no typescript)
-- Do not install new npm libraries
-  - If you feel like you need to, you may email me at patrick.wickham@alcoverooms.com to get approval
+- Do not use npm libraries for any core features
+  - If there's a library you think should be used, you may email me at patrick.wickham@alcoverooms.com to get approval
 - Must be runnable as Express server using `npm run dev` script and accessible locally on port 3001
   - This is already provided
 
@@ -49,11 +50,11 @@ These are just use cases, not necessarily API endpoints. Your API can have as ma
 
 ## You will be graded on:
 - API Design (Usability for clients)
-- Adherence to REST best practices
 - Code Readability
 - Overall Simplicty
 - Extensibility
-#### Example questions you should ask (but not implement):
+#### Example questions you should ask to evaluate your submission (but not implement):
+(This list is not exhaustive)
 - How easy would it be for a new contributor to pick up the project?
 - How easy would it be to plug in a database layer?
 - How easy would it be to add another type of survey question?
