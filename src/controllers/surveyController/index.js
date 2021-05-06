@@ -9,11 +9,11 @@ router.get('/', surveyService.getSurveys);
 router.post('/', surveyService.createSurvey);
 
 // Remove Question surveyid, Questionid Params Required
-router.get('/removequestion', surveyService.removeQuestion);
+router.delete('/question/:surveyId/:questionId', surveyService.removeQuestion);
 // router.delete('/:id', surveyService.deletesurvey);
 
 // Add New Question
-router.post('/addquestion', surveyService.addQuestion);
+router.post('/question/:surveyId', surveyService.addQuestion);
 
 // Modify a Question
 router.put('/question/:surveyId', surveyService.modifyQuestion);

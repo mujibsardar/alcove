@@ -3,3 +3,6 @@ node_modules
 
 # mac stuff
 .DS_Store
+
+# Do not check in hidden global variables
+.env

@@ -1,23 +1,25 @@
 let idCount = 0;
 
-let surveys = [
-  {
-    id: idCount,
-    title: "Roommate Initial Screening",
-    questions: [
-      {id: 0,type: "text", content: "What is your name"},
-      {id: 1,type: "choice", content: "What is your gender", choices: ["male", "female", "nonbinary"]},
-      {id: 2,type: "date", content: "What is your birthday"}
-    ],
-    responses: [{id: 0, question_1: "Avan Sardar", question_2: "male", question_3: new Date(1983, 07, 29)}]
-}]
+// let surveys = [
+//   {
+//     id: idCount,
+//     title: "Roommate Initial Screening",
+//     questions: [
+//       {id: 0,type: "text", content: "What is your name"},
+//       {id: 1,type: "choice", content: "What is your gender", choices: ["male", "female", "nonbinary"]},
+//       {id: 2,type: "date", content: "What is your birthday"}
+//     ],
+//     responses: [{id: 0, question_1: "Avan Sardar", question_2: "male", question_3: new Date(1983, 07, 29)}]
+// }]
+
+const surveys = require('../../database/data').Surveys;
 
 const generateID = () => {
   return Math.floor(Date.now() / Math.floor(Math.random() * 10000));
 }
 
 module.exports = {
-    find: function(params) {
+    getSurveys: function(params) {
       if(params && params.id){
         return surveys.filter(survey => {return survey.id === parseInt(params.id)})
       }
@@ -26,16 +28,16 @@ module.exports = {
       }
       return surveys;
     },
-    create: function(params) {
+    createSurvey: function(params) {
       // id, title, questions (id, type, content, choices)
-      let newSurvey = {id: ++idCount, title: params.title, questions: params.questions, responses: []}
+      let newSurvey = {id: generateID(), title: params.title, questions: params.questions, responses: []}
       surveys.push(newSurvey);
       return surveys;
     },
     removeQuestion: function(params) {
       // survey id, questions id
-      const surveyID = parseInt(params.surveyid);
-      const questionID = parseInt(params.questionid);
+      const surveyID = parseInt(params.surveyId);
+      const questionID = parseInt(params.questionId);
       surveys.forEach((survey, index) => {
         if(survey.id === surveyID) {
             let foundQuestionIndex = survey.questions.findIndex(question => question.id === questionID);
@@ -45,12 +47,12 @@ module.exports = {
     });
       return surveys;
     },
-    addQuestion: function(params) {
+    addQuestion: function(surveyID, params) {
 
       // survey id, id: 0,type: "text", content: "What is your name"
-      const surveyID = parseInt(params.surveyid);
+      surveyID = parseInt(surveyID);
       const newQuestionID = generateID();
-      const newQuestion = {id: newQuestionID, ...params.question};
+      const newQuestion = {id: newQuestionID, ...params};
 
       const surveyIdx = surveys.findIndex(survey => {
         return survey.id === surveyID

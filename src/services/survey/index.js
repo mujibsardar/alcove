@@ -6,7 +6,7 @@ const Survey = require('../../models/survey');
 
 const getSurveys = async (req, res, next) => {
     try {
-        let surveys = await Survey.find(req.query);
+        let surveys = await Survey.getSurveys(req.query);
 
         if (surveys.length > 0) {
             return res.status(200).json({
@@ -30,7 +30,7 @@ const getSurveys = async (req, res, next) => {
 const createSurvey = async (req, res, next) => {
     try {
 
-        let surveys = await Survey.create(req.body);
+        let surveys = await Survey.createSurvey(req.body);
 
         if (surveys.length > 0) {
             return res.status(200).json({
@@ -53,7 +53,7 @@ const createSurvey = async (req, res, next) => {
 
 const removeQuestion = async (req, res, next) => {
     try {
-        let surveys = await Survey.removeQuestion(req.query);
+        let surveys = await Survey.removeQuestion(req.params);
 
         if (surveys.length > 0) {
             return res.status(200).json({
@@ -76,7 +76,8 @@ const removeQuestion = async (req, res, next) => {
 
 const addQuestion = async (req, res, next) => {
     try {
-        let surveys = await Survey.addQuestion(req.body);
+        const surveyID = req.params.surveyId
+        let surveys = await Survey.addQuestion(surveyID, req.body);
 
         if (surveys.length > 0) {
             return res.status(200).json({
@@ -122,6 +123,7 @@ const modifyQuestion = async (req, res, next) => {
 }
 
 const reorderQuestions = async (req, res, next) => {
+
     try {
         const surveyID = req.params.surveyId
         let surveys = await Survey.reorderQuestions(surveyID, req.body);
@@ -146,6 +148,7 @@ const reorderQuestions = async (req, res, next) => {
 }
 
 const addResponse = async (req, res, next) => {
+
     try {
         const surveyID = req.params.surveyId
         let surveys = await Survey.addResponse(surveyID, req.body);
