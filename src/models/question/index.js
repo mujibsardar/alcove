@@ -2,23 +2,7 @@ const surveys = require('../../database/data').Surveys;
 const utils = require('../../utils');
 
 module.exports = {
-    getSurveys: function(params) {
-      if(params && params.id){
-        return surveys.filter(survey => {return survey.id === parseInt(params.id)})
-      }
-      if(params && params.title){
-        return surveys.filter(survey => {return survey.title.toLowerCase() === params.title.toLowerCase()})
-      }
-      return surveys;
-    },
-    createSurvey: function(params) {
-      // id, title, questions (id, type, content, choices)
-      let newSurvey = {id: utils.generateID(), title: params.title, questions: params.questions, responses: []}
-      surveys.push(newSurvey);
-      return surveys;
-    },
     removeQuestion: function(params) {
-      // survey id, questions id
       const surveyID = parseInt(params.surveyId);
       const questionID = parseInt(params.questionId);
       surveys.forEach((survey, index) => {
@@ -31,19 +15,14 @@ module.exports = {
       return surveys;
     },
     addQuestion: function(surveyID, params) {
-
-      // survey id, id: 0,type: "text", content: "What is your name"
       surveyID = parseInt(surveyID);
       const newQuestionID = utils.generateID();
       const newQuestion = {id: newQuestionID, ...params};
-
       const surveyIdx = surveys.findIndex(survey => {
         return survey.id === surveyID
       });
-
       // TODO Removed let survey = ....
       surveys[surveyIdx].questions.push(newQuestion);
-
       return surveys;
     },
     modifyQuestion: function(surveyID, params) {
@@ -51,7 +30,6 @@ module.exports = {
       const questionID = parseInt(params.id);
       surveyID = parseInt(surveyID);
       const updatedQuestion = params;
-
       surveys.forEach((survey, index) => {
         if(survey.id === surveyID) {
             const foundQuestionIndex = survey.questions.findIndex(question => question.id === questionID);
@@ -63,8 +41,6 @@ module.exports = {
       return surveys;
     },
     reorderQuestions: function(surveyID, params) {
-
-      // survey id, [ids]
       surveyID = parseInt(surveyID);
       const questionOrder = params.order;
       const surveyIdx = surveys.findIndex(survey => {
@@ -72,7 +48,6 @@ module.exports = {
       });
       const originalQuestions = surveys[surveyIdx].questions;
       let newQuestions = [];
-
       questionOrder.forEach((id, index) =>  {
         // Get question with id
         let question = originalQuestions.find(q => {
@@ -80,18 +55,7 @@ module.exports = {
         })
       	newQuestions.push(question);
       });
-
       surveys[surveyIdx].questions = newQuestions;
-
-      return surveys;
-    },
-    addResponse: function(surveyID, params) {
-      const responseID = utils.generateID();
-      let response ={id: responseID, ...params.response};
-      const surveyIdx = surveys.findIndex(survey => {
-        return survey.id === parseInt(surveyID)
-      });
-      surveys[surveyIdx].responses.push(response);
       return surveys;
     }
 };

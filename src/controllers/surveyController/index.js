@@ -10,7 +10,6 @@ router.post('/', surveyService.createSurvey);
 
 // Remove Question surveyid, Questionid Params Required
 router.delete('/question/:surveyId/:questionId', surveyService.removeQuestion);
-// router.delete('/:id', surveyService.deletesurvey);
 
 // Add New Question
 router.post('/question/:surveyId', surveyService.addQuestion);
