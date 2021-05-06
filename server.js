@@ -2,7 +2,7 @@
 const server = require('./src/server')();
 // The Configuration for the Server
 const config = require('./src/config');
-// TODO Database connection details go here
+// TODO Database connection details come from here
 const db = require('./src/database');
 
 // Create Server

@@ -8,7 +8,7 @@ const addResponse = async (req, res, next) => {
 
         if (surveys.length > 0) {
             return res.status(200).json({
-                'message': 'surveys fetched successfully',
+                'message': 'response added successfully',
                 'data': surveys
             });
         }
@@ -20,7 +20,8 @@ const addResponse = async (req, res, next) => {
     } catch (error) {
         return res.status(500).json({
             'code': 'SERVER_ERROR',
-            'description': 'something went wrong, Please try again'
+            'description': 'something went wrong, Please try again',
+            'message': error.message
         });
     }
 }
