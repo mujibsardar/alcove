@@ -30,7 +30,7 @@ https://enigmatic-harbor-78678.herokuapp.com/
 ```/models``` - Eventually this is where an ODM will handle data retrieval and manipulations  
 ```/routes``` - Defines high-level routes  
 ```/server``` - Build and start the server  
-```/services``` - This is the layer before the ODM. This is also where we do error handling in regard to the data  
+```/services``` - This is the layer before the ODM. This is also where we do error handling in regards to the data  
 ```utils``` - Any and all helper methods should go here  
 
 ## API Documentation  
