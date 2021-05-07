@@ -1,44 +1,44 @@
 # *************** THE SOLUTION ***************
 ## Run Locally
 
-Clone this repo
-Run ```npm install```
-Modify ```src/config/local.js``` if you need to change port# from 3001
-Run ```npm run dev```
+Clone this repo  
+Run ```npm install```  
+Modify ```src/config/local.js``` if you need to change port# from 3001  
+Run ```npm run dev```  
 
 ## Deploy to Production
-Port number on production is set to ```process.env.PORT``` otherwise defaults to 3001. You can change this behavior in ```src/config/production.js``` if you need to.
+Port number on production is set to ```process.env.PORT``` otherwise defaults to 3001. You can change this behavior in ```src/config/production.js``` if you need to.  
 
-Run ```npm install```
-Run ```npm run prod```
+Run ```npm install```  
+Run ```npm run prod```  
 
-### Heroku
+### Heroku  
 
-I am hosting this API on heroku under the following root URL:
+I am hosting this API on heroku under the following root URL:  
 
-https://enigmatic-harbor-78678.herokuapp.com/
+https://enigmatic-harbor-78678.herokuapp.com/  
 
-## API Design Notes
-### /
+## API Design Notes  
+### /  
 
-```server.js``` - entry point
+```server.js``` - entry point  
 
-### /src
-```/config``` - Loads local or production server variables
-```/controllers``` - Defines the specific endpoint paths
-```/database``` - This is where the data comes from. Currently using in-memory instead of persistent data
-```/models``` - Eventually this is where an ODM will handle data retrieval and manipulations
-```/routes``` - Defines high-level routes
-```/server``` - Build and start the server
-```/services``` - This is the layer before the ODM. This is also where we do error handling in regard to the data
-```utils``` - Any and all helper methods should go here
+### /src  
+```/config``` - Loads local or production server variables  
+```/controllers``` - Defines the specific endpoint paths  
+```/database``` - This is where the data comes from. Currently using in-memory instead of persistent data  
+```/models``` - Eventually this is where an ODM will handle data retrieval and manipulations  
+```/routes``` - Defines high-level routes  
+```/server``` - Build and start the server  
+```/services``` - This is the layer before the ODM. This is also where we do error handling in regard to the data  
+```utils``` - Any and all helper methods should go here  
 
-## API Documentation
-NOTE: ALL API endpoints will return an updated list of surveys or an error object
-### GET /api/surveys
-Get a list of surveys including questions and responses.
+## API Documentation  
+NOTE: ALL API endpoints will return an updated list of surveys or an error object  
+### GET /api/surveys  
+Get a list of surveys including questions and responses.  
 
-Sample response:
+Sample response:  
 ```
 {
     "message": "surveys fetched successfully",
@@ -82,17 +82,17 @@ Sample response:
 ```
 
 ### POST /api/surveys
-Create new survey. Requires two fields, one is ```questions``` of type Array which contains the questions this survey holds. The other field is ```title``` of type string. This will be the title of the survey.
+Create new survey. Requires two fields, one is ```questions``` of type Array which contains the questions this survey holds. The other field is ```title``` of type string. This will be the title of the survey.  
 
-* title: String
-* questions: Array
+* title: String  
+* questions: Array  
 
-Each question must a be a valid object with the following fields:
+Each question must a be a valid object with the following fields:  
 
-* type: String
-* content: String
+* type: String  
+* content: String  
 
-Example Post Body
+Example Post Body  
 ```
 {
     "title": "Extra Information"
@@ -106,18 +106,18 @@ Example Post Body
 ```
 
 ### DELETE /api/questions/:surveyId/:questionId
-Delete a question within a survey.
-Note: This does not delete responding responses to the deleted question
+Delete a question within a survey.  
+Note: This does not delete responding responses to the deleted question  
 
-```:surveyId``` must be a valid survey id
-```:questionId``` must be a valid question id within the parent survey
+```:surveyId``` must be a valid survey id  
+```:questionId``` must be a valid question id within the parent survey  
 
 ### POST /api/questions/:surveyId
-Add a question to a survey.
+Add a question to a survey.  
 
-```:surveyId``` must be a valid survey id
+```:surveyId``` must be a valid survey id  
 
-Example Post Body
+Example Post Body  
 
 ```
 {
@@ -126,13 +126,13 @@ Example Post Body
 ```
 
 ### PUT /api/questions/:surveyId
-Modify a question within the survey with the given id
+Modify a question within the survey with the given id  
 
-```:surveyId``` must be a valid survey id
+```:surveyId``` must be a valid survey id  
 
-Post body must include ```id``` that matches a valid question in the survey and the ```content``` field which reflects the updated question.
+Post body must include ```id``` that matches a valid question in the survey and the ```content``` field which reflects the updated question.  
 
-Example Body
+Example Body  
 ```
 {
     "id": 693935699,
@@ -141,13 +141,13 @@ Example Body
 ```
 
 ### PUT /api/questions/reorder/:surveyId
-Re-order the questions within the survey with the given id
+Re-order the questions within the survey with the given id  
 
 ```:surveyId``` must be a valid survey id
 
-The body must contain the field ```order``` of type Array. The array will contain the ids of the questions in the desired order. The number of ids must match the number of questions in this survey and all the ids must be valid ids matching the questions in this survey.
+The body must contain the field ```order``` of type Array. The array will contain the ids of the questions in the desired order. The number of ids must match the number of questions in this survey and all the ids must be valid ids matching the questions in this survey.  
 
-Example Body
+Example Body  
 
 ```
 {
@@ -156,13 +156,13 @@ Example Body
 ```
 
 ### POST /api/responses/:surveyId
-Add/submit a response to a survey
+Add/submit a response to a survey  
 
 ```:surveyId``` must be a valid survey id
 
-Note: There are NO validation being done on the responses being submitted. Any number and type of answers can be submitted.
+Note: There are NO validation being done on the responses being submitted. Any number and type of answers can be submitted.  
 
-Example Post Body
+Example Post Body  
 ```
 {"response":
     {
@@ -172,11 +172,6 @@ Example Post Body
     }
 }
 ```
-
-
-
-
-
 
 # *************** THE CHALLENGE ***************
 # Product Description
