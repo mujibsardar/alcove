@@ -18,7 +18,158 @@ I am hosting this API on heroku under the following root URL:
 
 https://enigmatic-harbor-78678.herokuapp.com/
 
-# API Documentation
+## API Design Notes
+### /
+
+server.js - entry point
+
+### /src
+/config - Loads local or production server variables
+/controllers - Defines the specific endpoint paths
+/database - This is where the data comes from. Currently using in-memory instead of persistent data
+/models - Eventually this is where an ODM will handle data retrieval and manipulations
+/routes - Defines high-level routes
+/server - Build and start the server
+/services - This is the layer before the ODM. This is also where we do error handling in regard to the data
+utils - Any and all helper methods should go here
+
+## API Documentation
+NOTE: ALL API endpoints will return an updated list of surveys or an error object
+### GET /api/surveys
+Get a list of surveys including questions and responses.
+
+Sample response:
+```
+{
+    "message": "surveys fetched successfully",
+    "data": [
+        {
+            "id": 3375723641,
+            "title": "Roommate Initial Screening",
+            "questions": [
+                {
+                    "id": 219202833,
+                    "type": "text",
+                    "content": "What is your name"
+                },
+                {
+                    "id": 390916127,
+                    "type": "choice",
+                    "content": "What is your gender",
+                    "choices": [
+                        "male",
+                        "female",
+                        "nonbinary"
+                    ]
+                },
+                {
+                    "id": 1401684556,
+                    "type": "date",
+                    "content": "When is your birthdate"
+                }
+            ],
+            "responses": [
+                {
+                    "id": 171392780,
+                    "question_1": "Avan Sardar",
+                    "question_2": "male",
+                    "question_3": "1983-08-29T06:00:00.000Z"
+                }
+            ]
+        }
+    ]
+}
+```
+
+### POST /api/surveys
+Create new survey. Requires one field ```questions``` of type Array which contains the questions this survey holds.
+Each question must a be a valid JSON object with the following fields:
+
+* type: String
+* content: String
+
+Example Post Body
+```
+{
+            "questions": [
+                {
+                    "type": "text",
+                    "content": "What is your name"
+                }
+            ]
+}
+```
+
+### DELETE /api/questions/:surveyId/:questionId
+Delete a question within a survey.
+Note: This does not delete responding responses to the deleted question
+
+```:surveyId``` must be a valid survey id
+```:questionId``` must be a valid question id within the parent survey
+
+### POST /api/questions/:surveyId
+Add a question to a survey.
+
+```:surveyId``` must be a valid survey id
+
+Example Post Body
+
+```
+{
+    "type": "text", "content": "Tell us about yourself?"
+}
+```
+
+### PUT /api/questions/:surveyId
+Modify a question within the survey with the given id
+
+```:surveyId``` must be a valid survey id
+
+Example Body
+
+```
+{
+    "id": 693935699,
+    "content": "What is your FIRST name?"
+}
+```
+
+### PUT /api/questions/reorder/:surveyId
+Re-order the questions within the survey with the given id
+
+```:surveyId``` must be a valid survey id
+
+The body must contain the field ```order``` of type Array. The array will contain the ids of the questions in the desired order. The number of ids must match the number of questions in this survey and all the ids must be valid ids matching the questions in this survey.
+
+Example Body
+
+```
+{
+    "order": [222635413,450595255, 650739171]
+}
+```
+
+### POST /api/responses/:surveyId
+Add/submit a response to a survey
+
+```:surveyId``` must be a valid survey id
+
+Note: There are NO validation being done on the responses being submitted. Any number and type of answers can be submitted.
+
+Example Post Body
+```
+{"response":
+    {
+        "question_1": "Jason Statham",
+        "question_2": "male",
+        "question_3": "1967-07-26"
+    }
+}
+```
+
+
+
+
 
 
 # *************** THE CHALLENGE ***************
