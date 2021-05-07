@@ -2,15 +2,15 @@
 ## Run Locally
 
 Clone this repo
-Run npm install
-Modify src/config/local.js if you need to change port# from 3001
-Run npm run dev
+Run ```npm install```
+Modify ```src/config/local.js``` if you need to change port# from 3001
+Run ```npm run dev```
 
 ## Deploy to Production
-Port number on production is set to process.env.PORT otherwise defaults to 3001. You can change this behavior in src/config/production.js if you need to.
+Port number on production is set to ```process.env.PORT``` otherwise defaults to 3001. You can change this behavior in ```src/config/production.js``` if you need to.
 
-Run npm install
-Run npm run prod
+Run ```npm install```
+Run ```npm run prod```
 
 ### Heroku
 
@@ -21,17 +21,17 @@ https://enigmatic-harbor-78678.herokuapp.com/
 ## API Design Notes
 ### /
 
-server.js - entry point
+```server.js``` - entry point
 
 ### /src
-/config - Loads local or production server variables
-/controllers - Defines the specific endpoint paths
-/database - This is where the data comes from. Currently using in-memory instead of persistent data
-/models - Eventually this is where an ODM will handle data retrieval and manipulations
-/routes - Defines high-level routes
-/server - Build and start the server
-/services - This is the layer before the ODM. This is also where we do error handling in regard to the data
-utils - Any and all helper methods should go here
+```/config``` - Loads local or production server variables
+```/controllers``` - Defines the specific endpoint paths
+```/database``` - This is where the data comes from. Currently using in-memory instead of persistent data
+```/models``` - Eventually this is where an ODM will handle data retrieval and manipulations
+```/routes``` - Defines high-level routes
+```/server``` - Build and start the server
+```/services``` - This is the layer before the ODM. This is also where we do error handling in regard to the data
+```utils``` - Any and all helper methods should go here
 
 ## API Documentation
 NOTE: ALL API endpoints will return an updated list of surveys or an error object
@@ -82,8 +82,12 @@ Sample response:
 ```
 
 ### POST /api/surveys
-Create new survey. Requires one field ```questions``` of type Array which contains the questions this survey holds.
-Each question must a be a valid JSON object with the following fields:
+Create new survey. Requires two fields, one is ```questions``` of type Array which contains the questions this survey holds. The other field is ```title``` of type string. This will be the title of the survey.
+
+* title: String
+* questions: Array
+
+Each question must a be a valid object with the following fields:
 
 * type: String
 * content: String
@@ -91,12 +95,13 @@ Each question must a be a valid JSON object with the following fields:
 Example Post Body
 ```
 {
-            "questions": [
-                {
-                    "type": "text",
-                    "content": "What is your name"
-                }
-            ]
+    "title": "Extra Information"
+    "questions": [
+        {
+            "type": "text",
+            "content": "What is your nick name"
+        }
+    ]
 }
 ```
 
@@ -125,8 +130,9 @@ Modify a question within the survey with the given id
 
 ```:surveyId``` must be a valid survey id
 
-Example Body
+Post body must include ```id``` that matches a valid question in the survey and the ```content``` field which reflects the updated question.
 
+Example Body
 ```
 {
     "id": 693935699,

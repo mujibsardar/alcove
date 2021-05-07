@@ -9,7 +9,7 @@ module.exports = {
       if(!params.title || !params.title === ''){
         throw Error("You must provide a valid title")
       }
-      let newSurvey = {id: utils.generateID(), title: params.title, questions: params.questions, responses: []}
+      let newSurvey = {id: utils.generateID(), title: params.title, questions: utils.addIDs(params.questions), responses: []}
       surveys.push(newSurvey);
       return surveys;
     }
