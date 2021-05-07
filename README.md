@@ -1,3 +1,27 @@
+# *************** THE SOLUTION ***************
+## Run Locally
+
+Clone this repo
+Run npm install
+Modify src/config/local.js if you need to change port# from 3001
+Run npm run dev
+
+## Deploy to Production
+Port number on production is set to process.env.PORT otherwise defaults to 3001. You can change this behavior in src/config/production.js if you need to.
+
+Run npm install
+Run npm run prod
+
+### Heroku
+
+I am hosting this API on heroku under the following root URL:
+
+https://enigmatic-harbor-78678.herokuapp.com/
+
+# API Documentation
+
+
+# *************** THE CHALLENGE ***************
 # Product Description
 SurveysAPI is a JSON REST API for creating, modifying, and submitting surveys. A survey is an ordered list of survey questions. Supported types of questions include:
 - Text Entry (free form) (ex: "What is your name")
