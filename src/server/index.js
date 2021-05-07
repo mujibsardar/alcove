@@ -8,16 +8,14 @@ module.exports = function () {
     create = (config, db) => {
         let routes = require('../routes');
         // Setup
-        // TODO
-        // server.set('env', config.env);
         server.set('port', config.port);
-        server.set('hostname', config.hostname);
+
 
         // Middleware
         server.use(express.json());
 
         // Database
-        // TODO
+        // e.g.
         // mongoose.connect(
         //     db.database, ...
         // );
