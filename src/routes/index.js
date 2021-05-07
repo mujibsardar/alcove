@@ -7,6 +7,11 @@ const init = (server) => {
         return next();
     });
 
+    server.get('/', function (req, res, next) {
+        res.send('Please visit my private repo for more instructions: https://github.com/mujibsardar/alcove')
+        return next();
+    });
+
     server.use('/api', api);
 }
 module.exports = {
